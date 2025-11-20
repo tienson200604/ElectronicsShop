@@ -1,540 +1,189 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="pageTitle" value="Shop Cart - Electro" scope="request"/>
+<c:set var="pageActive" value="Cart" scope="request"/>
+
 <!DOCTYPE html>
 <html lang="en">
 
     <head>
         <meta charset="utf-8">
-        <title>Electro - Electronics Website Template</title>
+        <title>${pageTitle}</title> 
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="" name="keywords">
-        <meta content="" name="description">
-
-        <!-- Google Web Fonts -->
+        
+        <%-- ĐẢM BẢO CSS VÀ LIBS GIỐNG HEADER --%>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"> 
-
-        <!-- Icon Font Stylesheet -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+        
+        <%-- SỬ DỤNG CONTEXT PATH CHO TÀI NGUYÊN --%>
+        <link href="${contextPath}/lib/animate/animate.min.css" rel="stylesheet">
+        <link href="${contextPath}/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
+        <link href="${contextPath}/css/style.css" rel="stylesheet">
 
-        <!-- Libraries Stylesheet -->
-        <link href="lib/animate/animate.min.css" rel="stylesheet">
-        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
-
-        <!-- Customized Bootstrap Stylesheet -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-
-        <!-- Template Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
+        <style>
+            .table-cart img {
+                width: 80px;
+                height: 80px;
+                object-fit: cover;
+                border-radius: 8px;
+            }
+            .text-primary { color: #f58b0a !important; }
+            .bg-light { background-color: #f8f9fa !important; }
+            .btn-primary { background-color: #f58b0a !important; border-color: #f58b0a !important; }
+            .btn-primary:hover { background-color: #ff9f1a !important; border-color: #ff9f1a !important; }
+            .cart-summary h1 { font-size: 2.25rem; }
+            .text-danger { color: #dc3545 !important; }
+        </style>
     </head>
 
     <body>
+        
+        <%-- INCLUDE HEADER (Giả định nằm trong WEB-INF/common/) --%>
+        <jsp:include page="/common/header.jsp" /> 
 
-        <!-- Spinner Start -->
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-        <!-- Spinner End -->
-
-
-        <!-- Topbar Start -->
-        <div class="container-fluid px-5 d-none border-bottom d-lg-block">
-            <div class="row gx-0 align-items-center">
-                <div class="col-lg-4 text-center text-lg-start mb-lg-0">
-                    <div class="d-inline-flex align-items-center" style="height: 45px;">
-                        <a href="#" class="text-muted me-2"> Help</a><small> / </small>
-                        <a href="#" class="text-muted mx-2"> Support</a><small> / </small>
-                        <a href="#" class="text-muted ms-2"> Contact</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 text-center d-flex align-items-center justify-content-center">
-                    <small class="text-dark">Call Us:</small>
-                    <a href="#" class="text-muted">(+012) 1234 567890</a>
-                </div>
-
-                <div class="col-lg-4 text-center text-lg-end">
-                    <div class="d-inline-flex align-items-center" style="height: 45px;">
-                        <div class="dropdown">
-                            <a href="#" class="dropdown-toggle text-muted me-2" data-bs-toggle="dropdown"><small> USD</small></a>
-                            <div class="dropdown-menu rounded">
-                                <a href="#" class="dropdown-item"> Euro</a>
-                                <a href="#" class="dropdown-item"> Dolar</a>
-                            </div>
-                        </div>
-                        <div class="dropdown">
-                            <a href="#" class="dropdown-toggle text-muted mx-2" data-bs-toggle="dropdown"><small> English</small></a>
-                            <div class="dropdown-menu rounded">
-                                <a href="#" class="dropdown-item"> English</a>
-                                <a href="#" class="dropdown-item"> Turkish</a>
-                                <a href="#" class="dropdown-item"> Spanol</a>
-                                <a href="#" class="dropdown-item"> Italiano</a>
-                            </div>
-                        </div>
-                        <div class="dropdown">
-                            <a href="#" class="dropdown-toggle text-muted ms-2" data-bs-toggle="dropdown"><small><i class="fa fa-home me-2"></i> My Dashboard</small></a>
-                            <div class="dropdown-menu rounded">
-                                <a href="#" class="dropdown-item"> Login</a>
-                                <a href="#" class="dropdown-item"> Wishlist</a>
-                                <a href="#" class="dropdown-item"> My Card</a>
-                                <a href="#" class="dropdown-item"> Notifications</a>
-                                <a href="#" class="dropdown-item"> Account Settings</a>
-                                <a href="#" class="dropdown-item"> My Account</a>
-                                <a href="#" class="dropdown-item"> Log Out</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid px-5 py-4 d-none d-lg-block">
-            <div class="row gx-0 align-items-center text-center">
-                <div class="col-md-4 col-lg-3 text-center text-lg-start">
-                    <div class="d-inline-flex align-items-center">
-                        <a href="" class="navbar-brand p-0">
-                            <h1 class="display-5 text-primary m-0"><i class="fas fa-shopping-bag text-secondary me-2"></i>Electro</h1>
-                            <!-- <img src="img/logo.png" alt="Logo"> -->
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-4 col-lg-6 text-center">
-                    <div class="position-relative ps-4">
-                        <div class="d-flex border rounded-pill">
-                            <input class="form-control border-0 rounded-pill w-100 py-3" type="text" data-bs-target="#dropdownToggle123" placeholder="Search Looking For?">
-                            <select class="form-select text-dark border-0 border-start rounded-0 p-3" style="width: 200px;">
-                                <option value="All Category">All Category</option>
-                                <option value="Pest Control-2">Category 1</option>
-                                <option value="Pest Control-3">Category 2</option>
-                                <option value="Pest Control-4">Category 3</option>
-                                <option value="Pest Control-5">Category 4</option>
-                            </select>
-                            <button type="button" class="btn btn-primary rounded-pill py-3 px-5" style="border: 0;"><i class="fas fa-search"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-lg-3 text-center text-lg-end">
-                    <div class="d-inline-flex align-items-center">
-                        <a href="#" class="text-muted d-flex align-items-center justify-content-center me-3"><span class="rounded-circle btn-md-square border"><i class="fas fa-random"></i></i></a>
-                        <a href="#" class="text-muted d-flex align-items-center justify-content-center me-3"><span class="rounded-circle btn-md-square border"><i class="fas fa-heart"></i></a>
-                        <a href="#" class="text-muted d-flex align-items-center justify-content-center"><span class="rounded-circle btn-md-square border"><i class="fas fa-shopping-cart"></i></span> <span class="text-dark ms-2">$0.00</span></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Topbar End -->
-
-        <!-- Navbar & Hero Start -->
-        <div class="container-fluid nav-bar p-0">
-            <div class="row gx-0 bg-primary px-5 align-items-center">
-                <div class="col-lg-3 d-none d-lg-block">
-                    <nav class="navbar navbar-light position-relative" style="width: 250px;">
-                        <button class="navbar-toggler border-0 fs-4 w-100 px-0 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#allCat">
-                            <h4 class="m-0"><i class="fa fa-bars me-2"></i>All Categories</h4>
-                        </button>
-                        <div class="collapse navbar-collapse rounded-bottom" id="allCat">
-                            <div class="navbar-nav ms-auto py-0">
-                                <ul class="list-unstyled categories-bars">
-                                    <li>
-                                        <div class="categories-bars-item">
-                                            <a href="#">Accessories</a>
-                                            <span>(3)</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="categories-bars-item">
-                                            <a href="#">Electronics & Computer</a>
-                                            <span>(5)</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="categories-bars-item">
-                                            <a href="#">Laptops & Desktops</a>
-                                            <span>(2)</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="categories-bars-item">
-                                            <a href="#">Mobiles & Tablets</a>
-                                            <span>(8)</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="categories-bars-item">
-                                            <a href="#">SmartPhone & Smart TV</a>
-                                            <span>(5)</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </nav>
-                </div>
-                <div class="col-12 col-lg-9">
-                    <nav class="navbar navbar-expand-lg navbar-light bg-primary ">
-                        <a href="" class="navbar-brand d-block d-lg-none">
-                            <h1 class="display-5 text-secondary m-0"><i class="fas fa-shopping-bag text-white me-2"></i>Electro</h1>
-                            <!-- <img src="img/logo.png" alt="Logo"> -->
-                        </a>
-                        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                            <span class="fa fa-bars fa-1x"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarCollapse">
-                            <div class="navbar-nav ms-auto py-0">
-                                <a href="index" class="nav-item nav-link">Home</a>
-                                <a href="shop" class="nav-item nav-link">Shop</a>
-                                <a href="cart" class="nav-item nav-link active">Shop Cart</a>
-                                <a href="cheackout" class="nav-item nav-link">Cheackout</a>
-                                <a href="contact" class="nav-item nav-link me-2">Contact</a>
-                                <div class="nav-item dropdown d-block d-lg-none mb-3">
-                                    <a href="#" class="nav-link" data-bs-toggle="dropdown"><span class="dropdown-toggle">All Category</span></a>
-                                    <div class="dropdown-menu m-0">
-                                        <ul class="list-unstyled categories-bars">
-                                            <li>
-                                                <div class="categories-bars-item">
-                                                    <a href="#">Accessories</a>
-                                                    <span>(3)</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="categories-bars-item">
-                                                    <a href="#">Electronics & Computer</a>
-                                                    <span>(5)</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="categories-bars-item">
-                                                    <a href="#">Laptops & Desktops</a>
-                                                    <span>(2)</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="categories-bars-item">
-                                                    <a href="#">Mobiles & Tablets</a>
-                                                    <span>(8)</span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="categories-bars-item">
-                                                    <a href="#">SmartPhone & Smart TV</a>
-                                                    <span>(5)</span>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="" class="btn btn-secondary rounded-pill py-2 px-4 px-lg-3 mb-3 mb-md-3 mb-lg-0"><i class="fa fa-mobile-alt me-2"></i> +0123 456 7890</a>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
-        <!-- Navbar & Hero End -->
-
-        <!-- Single Page Header start -->
+        <%-- Single Page Header start --%>
         <div class="container-fluid page-header py-5">
             <h1 class="text-center text-white display-6 wow fadeInUp" data-wow-delay="0.1s">Cart Page</h1>
             <ol class="breadcrumb justify-content-center mb-0 wow fadeInUp" data-wow-delay="0.3s">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="${contextPath}/">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">Pages</a></li>
                 <li class="breadcrumb-item active text-white">Cart Page</li>
             </ol>
         </div>
-        <!-- Single Page Header End -->
+        <%-- Single Page Header End --%>
 
-        <!-- Cart Page Start -->
+        <%-- Cart Page Start --%>
         <div class="container-fluid py-5">
             <div class="container py-5">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-hover table-cart">
                         <thead>
-                          <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Model</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Total</th>
-                            <th scope="col">Handle</th>
-                          </tr>
+                            <tr>
+                                <th scope="col">Product Image</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Handle</th>
+                            </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">
-                                    <p class="mb-0 py-4">Apple iPad Mini</p>
-                                </th>
-                                <td>
-                                    <p class="mb-0 py-4">G2356</p>
-                                </td>
-                                <td>
-                                    <p class="mb-0 py-4">2.99 $</p>
-                                </td>
-                                <td>
-                                    <div class="input-group quantity py-4" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                            <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <p class="mb-0 py-4">2.99 $</p>
-                                </td>
-                                <td class="py-4">
-                                    <button class="btn btn-md rounded-circle bg-light border" >
-                                        <i class="fa fa-times text-danger"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <p class="mb-0 py-4">Apple iPad Mini</p>
-                                </th>
-                                <td>
-                                    <p class="mb-0 py-4">G2356</p>
-                                </td>
-                                <td>
-                                    <p class="mb-0 py-4">2.99 $</p>
-                                </td>
-                                <td>
-                                    <div class="input-group quantity py-4" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                            <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <p class="mb-0 py-4">2.99 $</p>
-                                </td>
-                                <td class="py-4">
-                                    <button class="btn btn-md rounded-circle bg-light border" >
-                                        <i class="fa fa-times text-danger"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <p class="mb-0 py-4">Apple iPad Mini</p>
-                                </th>
-                                <td>
-                                    <p class="mb-0 py-4">G2356</p>
-                                </td>
-                                <td>
-                                    <p class="mb-0 py-4">2.99 $</p>
-                                </td>
-                                <td>
-                                    <div class="input-group quantity py-4" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                            <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <p class="mb-0 py-4">2.99 $</p>
-                                </td>
-                                <td class="py-4">
-                                    <button class="btn btn-md rounded-circle bg-light border" >
-                                        <i class="fa fa-times text-danger"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            <%-- LẶP QUA CÁC MỤC TRONG GIỎ HÀNG (cartItems) --%>
+                            <c:choose>
+                                <c:when test="${not empty cartItems}">
+                                    <c:forEach var="item" items="${cartItems}">
+                                    <tr class="align-middle">
+                                        <td>
+                                            <img src="${contextPath}/${item.product.imagePath}" class="img-fluid rounded" alt="${item.product.name}">
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">${item.product.name}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0 text-primary fw-bold">
+                                                $<fmt:formatNumber value="${item.product.effectivePrice}" pattern="#,##0.00"/>
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <%-- Form cập nhật số lượng --%>
+                                            <form action="${contextPath}/cart" method="post" class="d-flex align-items-center">
+                                                <input type="hidden" name="action" value="update"/>
+                                                <input type="hidden" name="productId" value="${item.product.id}"/>
+                                                <div class="input-group quantity" style="width: 130px;">
+                                                    <input type="number" 
+                                                           name="quantity" 
+                                                           value="${item.quantity}"
+                                                           min="1" 
+                                                           max="${item.product.stockQuantity > 0 ? item.product.stockQuantity : 100}"
+                                                           class="form-control form-control-sm text-center border-primary" >
+                                                    <button type="submit" class="btn btn-sm btn-primary">
+                                                        <i class="fa fa-sync"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0 fw-bold text-danger">
+                                                $<fmt:formatNumber value="${item.totalPrice}" pattern="#,##0.00"/>
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <%-- Xóa sản phẩm --%>
+                                            <a href="${contextPath}/cart?action=remove&pid=${item.product.id}" class="btn btn-md rounded-circle bg-light border" title="Remove Item">
+                                                <i class="fa fa-times text-danger"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <tr>
+                                        <td colspan="6" class="text-center py-5">
+                                            <div class="alert alert-warning">Giỏ hàng của bạn đang trống!</div>
+                                            <a href="${contextPath}/shop" class="btn btn-primary rounded-pill px-4">Tiếp tục mua sắm</a>
+                                        </td>
+                                    </tr>
+                                </c:otherwise>
+                            </c:choose>
+
                         </tbody>
                     </table>
                 </div>
-                <div class="mt-5">
-                    <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code">
-                    <button class="btn btn-primary rounded-pill px-4 py-3" type="button">Apply Coupon</button>
-                </div>
-                <div class="row g-4 justify-content-end">
-                    <div class="col-8"></div>
+                
+                <div class="row g-4 justify-content-end mt-5">
+                    <div class="col-lg-6">
+                         <div class="mt-5">
+                            <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code">
+                            <button class="btn btn-primary rounded-pill px-4 py-3" type="button">Apply Coupon</button>
+                        </div>
+                    </div>
                     <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
-                        <div class="bg-light rounded">
+                        <div class="bg-light rounded cart-summary">
                             <div class="p-4">
                                 <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
+                                
                                 <div class="d-flex justify-content-between mb-4">
                                     <h5 class="mb-0 me-4">Subtotal:</h5>
-                                    <p class="mb-0">$96.00</p>
+                                    <p class="mb-0 fw-bold">$<fmt:formatNumber value="${cartTotal.subtotal}" pattern="#,##0.00"/></p>
                                 </div>
+                                
                                 <div class="d-flex justify-content-between">
-                                    <h5 class="mb-0 me-4">Shipping</h5>
+                                    <h5 class="mb-0 me-4">Shipping:</h5>
                                     <div>
-                                        <p class="mb-0">Flat rate: $3.00</p>
+                                        <p class="mb-0 fw-bold text-success">Free Shipping</p>
                                     </div>
                                 </div>
-                                <p class="mb-0 text-end">Shipping to Ukraine.</p>
+                                <p class="mb-0 text-end text-muted small">Chi phí vận chuyển được tính miễn phí.</p>
                             </div>
+                            
                             <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                                 <h5 class="mb-0 ps-4 me-4">Total</h5>
-                                <p class="mb-0 pe-4">$99.00</p>
+                                <h5 class="mb-0 pe-4 text-danger fw-bold">$<fmt:formatNumber value="${cartTotal.finalTotal}" pattern="#,##0.00"/></h5>
                             </div>
-                            <button class="btn btn-primary rounded-pill px-4 py-3 text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+                            <a href="${contextPath}/checkout" class="btn btn-primary rounded-pill px-4 py-3 text-uppercase w-100 mb-4">Proceed Checkout</a>
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
-        <!-- Cart Page End -->
+        <%-- Cart Page End --%>
 
-        <!-- Footer Start -->
-        <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
-            <div class="container py-5">
-                <div class="row g-4 rounded mb-5" style="background: rgba(255, 255, 255, .03);">
-                    <div class="col-md-6 col-lg-6 col-xl-3">
-                        <div class="rounded p-4">
-                            <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mb-4" style="width: 70px; height: 70px;">
-                                <i class="fas fa-map-marker-alt fa-2x text-primary"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white">Address</h4>
-                                <p class="mb-2">123 Street New York.USA</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3">
-                        <div class="rounded p-4">
-                            <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mb-4" style="width: 70px; height: 70px;">
-                                <i class="fas fa-envelope fa-2x text-primary"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white">Mail Us</h4>
-                                <p class="mb-2">info@example.com</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3">
-                        <div class="rounded p-4">
-                            <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mb-4" style="width: 70px; height: 70px;">
-                                <i class="fa fa-phone-alt fa-2x text-primary"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white">Telephone</h4>
-                                <p class="mb-2">(+012) 3456 7890</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3">
-                        <div class="rounded p-4">
-                            <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mb-4" style="width: 70px; height: 70px;">
-                                <i class="fab fa-firefox-browser fa-2x text-primary"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white">Yoursite@ex.com</h4>
-                                <p class="mb-2">(+012) 3456 7890</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row g-5">
-                    <div class="col-md-6 col-lg-6 col-xl-3">
-                        <div class="footer-item d-flex flex-column">
-                            <div class="footer-item">
-                                <h4 class="text-primary mb-4">Newsletter</h4>
-                                <p class="text-white mb-3">Dolor amet sit justo amet elitr clita ipsum elitr est.Lorem ipsum dolor sit amet, consectetur adipiscing elit consectetur adipiscing elit.</p>
-                                <div class="position-relative mx-auto rounded-pill">
-                                    <input class="form-control rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Enter your email">
-                                    <button type="button" class="btn btn-primary rounded-pill position-absolute top-0 end-0 py-2 mt-2 me-2">SignUp</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3">
-                        <div class="footer-item d-flex flex-column">
-                            <h4 class="text-primary mb-4">Customer Service</h4>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Contact Us</a>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Returns</a>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Order History</a>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Site Map</a>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Testimonials</a>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> My Account</a>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Unsubscribe Notification</a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3">
-                        <div class="footer-item d-flex flex-column">
-                            <h4 class="text-primary mb-4">Information</h4>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> About Us</a>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Delivery infomation</a>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Privacy Policy</a>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Terms & Conditions</a>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Warranty</a>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> FAQ</a>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Seller Login</a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3">
-                        <div class="footer-item d-flex flex-column">
-                            <h4 class="text-primary mb-4">Extras</h4>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Brands</a>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Gift Vouchers</a>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Affiliates</a>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Wishlist</a>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Order History</a>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Track Your Order</a>
-                            <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Track Your Order</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Footer End -->
+        <%-- INCLUDE FOOTER --%>
+        <jsp:include page="/common/footer.jsp" /> 
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="${contextPath}/lib/wow/wow.min.js"></script>
+        <script src="${contextPath}/lib/owlcarousel/owl.carousel.min.js"></script>
         
-        <!-- Copyright Start -->
-        <div class="container-fluid copyright py-4">
-            <div class="container">
-                <div class="row g-4 align-items-center">
-                    <div class="col-md-6 text-center text-md-start mb-md-0">
-                        <span class="text-white"><a href="#" class="border-bottom text-white"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
-                    </div>
-                    <div class="col-md-6 text-center text-md-end text-white">
-                        
-                        <!--/*** The author’s attribution link must remain intact in the template. ***/-->
-                        <!--/*** If you wish to remove this credit link, please purchase the Pro Version . ***/-->
-                        Designed By <a class="border-bottom text-white" href="https://htmlcodex.com">HTML Codex</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Copyright End -->
-
-
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-primary btn-lg-square back-to-top"><i class="fa fa-arrow-up"></i></a>   
-
-        
-    <!-- JavaScript Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    
-
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+        <script src="${contextPath}/js/main.js"></script>
     </body>
-
 </html>

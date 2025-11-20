@@ -1,6 +1,7 @@
 package Model;
 
 public class Product {
+
     private int id; // Đổi từ productId thành id
     private String name;
     private String shortDescription; // Thêm trường này
@@ -10,11 +11,14 @@ public class Product {
     private int categoryId;
     private String categoryName;
     private double effectivePrice;
-    
+    private String description;
+    private int warrantyMonths;
+    private String brandName;
 
-    public Product() {}
+    public Product() {
+    }
 
-    public Product(int id, String name, String shortDescription, double price, double salePrice, String imagePath, int categoryId, String categoryName, double effectivePrice) {
+    public Product(int id, String name, String shortDescription, double price, double salePrice, String imagePath, int categoryId, String categoryName, double effectivePrice, String description, int warrantyMonths, String brandName) {
         this.id = id;
         this.name = name;
         this.shortDescription = shortDescription;
@@ -24,8 +28,34 @@ public class Product {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.effectivePrice = effectivePrice;
+        this.description = description;
+        this.warrantyMonths = warrantyMonths;
+        this.brandName = brandName;
     }
-    
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getWarrantyMonths() {
+        return warrantyMonths;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setWarrantyMonths(int warrantyMonths) {
+        this.warrantyMonths = warrantyMonths;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
 
     public int getCategoryId() {
         return categoryId;
@@ -51,26 +81,54 @@ public class Product {
         this.effectivePrice = effectivePrice;
     }
 
-    
-
     // Getters và Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public String getShortDescription() { return shortDescription; }
-    public void setShortDescription(String shortDescription) { this.shortDescription = shortDescription; }
+    public String getName() {
+        return name;
+    }
 
-    public double getPrice() { return price; }
-    public void setPrice(double price) { this.price = price; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public double getSalePrice() { return salePrice; }
-    public void setSalePrice(double salePrice) { this.salePrice = salePrice; }
-    
-    public String getImagePath() { return imagePath; }
-    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public double getSalePrice() {
+        return salePrice;
+    }
+
+    public void setSalePrice(double salePrice) {
+        this.salePrice = salePrice;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 
     // Phương thức tiện ích để lấy giá hiển thị (ưu tiên Sale Price nếu có)
     public double getDisplayPrice() {

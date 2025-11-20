@@ -82,7 +82,7 @@
         font-weight: 700;
         font-size: 18px;
         margin-bottom: 16px;
-         color: #ff7a00;
+        color: #ff7a00;
     }
     .category-list {
         list-style: none;
@@ -309,60 +309,60 @@
 
             <!-- SIDEBAR CATEGORIES -->
             <div class="col-lg-3 wow fadeInUp" data-wow-delay="0.1s">
-    <div class="category-widget mb-4">
-        <div class="category-title">Products Categories</div>
-        <ul class="category-list">
-            <c:forEach var="cat" items="${categoryList}">
+                <div class="category-widget mb-4">
+                    <div class="category-title">Products Categories</div>
+                    <ul class="category-list">
+                        <c:forEach var="cat" items="${categoryList}">
 
-                <c:set var="iconClass" value="fa-tag" />
-                <c:choose>
-                    <c:when test="${cat.id == 1}">
-                        <c:set var="iconClass" value="fa-mobile-alt" />
-                    </c:when>
-                    <c:when test="${cat.id == 2}">
-                        <c:set var="iconClass" value="fa-laptop" />
-                    </c:when>
-                    <c:when test="${cat.id == 3}">
-                        <c:set var="iconClass" value="fa-tablet-alt" />
-                    </c:when>
-                    <c:when test="${cat.id == 4}">
-                        <c:set var="iconClass" value="fa-tv" />
-                    </c:when>
-                    <c:when test="${cat.id == 5}">
-                        <c:set var="iconClass" value="fa-volume-up" />
-                    </c:when>
-                    <c:when test="${cat.id == 6}">
-                        <c:set var="iconClass" value="fa-headphones" />
-                    </c:when>
-                    <c:when test="${cat.id == 7}">
-                        <c:set var="iconClass" value="fa-mouse" />
-                    </c:when>
-                </c:choose>
+                            <c:set var="iconClass" value="fa-tag" />
+                            <c:choose>
+                                <c:when test="${cat.id == 1}">
+                                    <c:set var="iconClass" value="fa-mobile-alt" />
+                                </c:when>
+                                <c:when test="${cat.id == 2}">
+                                    <c:set var="iconClass" value="fa-laptop" />
+                                </c:when>
+                                <c:when test="${cat.id == 3}">
+                                    <c:set var="iconClass" value="fa-tablet-alt" />
+                                </c:when>
+                                <c:when test="${cat.id == 4}">
+                                    <c:set var="iconClass" value="fa-tv" />
+                                </c:when>
+                                <c:when test="${cat.id == 5}">
+                                    <c:set var="iconClass" value="fa-volume-up" />
+                                </c:when>
+                                <c:when test="${cat.id == 6}">
+                                    <c:set var="iconClass" value="fa-headphones" />
+                                </c:when>
+                                <c:when test="${cat.id == 7}">
+                                    <c:set var="iconClass" value="fa-mouse" />
+                                </c:when>
+                            </c:choose>
 
-                <c:url var="catUrl" value="/shop">
-                    <c:param name="categoryId" value="${cat.id}" />
-                    <c:if test="${not empty param.keyword}">
-                        <c:param name="keyword" value="${param.keyword}" />
-                    </c:if>
-                    <c:if test="${not empty param.maxPrice}">
-                        <c:param name="maxPrice" value="${param.maxPrice}" />
-                    </c:if>
-                    <c:if test="${not empty param.sort}">
-                        <c:param name="sort" value="${param.sort}" />
-                    </c:if>
-                </c:url>
+                            <c:url var="catUrl" value="/shop">
+                                <c:param name="categoryId" value="${cat.id}" />
+                                <c:if test="${not empty param.keyword}">
+                                    <c:param name="keyword" value="${param.keyword}" />
+                                </c:if>
+                                <c:if test="${not empty param.maxPrice}">
+                                    <c:param name="maxPrice" value="${param.maxPrice}" />
+                                </c:if>
+                                <c:if test="${not empty param.sort}">
+                                    <c:param name="sort" value="${param.sort}" />
+                                </c:if>
+                            </c:url>
 
-                <li class="category-item ${param.categoryId == cat.id ? 'active' : ''}">
-                    <a href="${catUrl}">
-                        <i class="fa ${iconClass}"></i>
-                        <span>${cat.name}</span>
-                    </a>
-                    <span class="category-badge">(${cat.productCount})</span>
-                </li>
-            </c:forEach>
-        </ul>
-    </div>
-</div>
+                            <li class="category-item ${param.categoryId == cat.id ? 'active' : ''}">
+                                <a href="${catUrl}">
+                                    <i class="fa ${iconClass}"></i>
+                                    <span>${cat.name}</span>
+                                </a>
+                                <span class="category-badge">(${cat.productCount})</span>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </div>
 
             <!-- PRODUCT LIST -->
             <div class="col-lg-9 wow fadeInUp" data-wow-delay="0.1s">
@@ -382,10 +382,8 @@
                                                              alt="${product.name}">
                                                         <div class="product-new">New</div>
                                                         <div class="product-details">
-                                                            <a href="${contextPath}/product-detail?id=${product.id}">
-                                                                <i class="fa fa-eye fa-1x"></i>
-                                                            </a>
-                                                        </div>
+    <a href="${contextPath}/product-detail?id=${product.id}"><i class="fa fa-eye fa-1x"></i></a>
+</div>
                                                     </div>
                                                     <div class="text-center rounded-bottom p-4">
                                                         <a href="${contextPath}/product-detail?id=${product.id}"

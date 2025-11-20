@@ -29,6 +29,9 @@ public class ProductDAO {
         } catch (SQLException e) {
              // Bỏ qua nếu category_name không có trong ResultSet
         }
+        try { product.setDescription(rs.getString("description")); } catch (SQLException e) {}
+    try { product.setWarrantyMonths(rs.getInt("warranty_months")); } catch (SQLException e) {}
+    try { product.setBrandName(rs.getString("brandName")); } catch (SQLException e) {} // Lấy từ alias brandName
 
         // Gán giá và xử lý NULL
         product.setPrice(rs.getDouble("price"));
@@ -297,4 +300,34 @@ public List<Product> getProducts(String keyword, Double maxPrice,
         }
         return list;
     }
+    public Product getProductById(int id) {
+    String query = "SELECT p.id, p.name, p.short_description, p.description, p.warranty_months, p.stock_quantity, "
+            + "p.category_id, p.is_active, p.is_top_selling, p.is_featured, p.is_new, "
+            + "c.name AS category_name, "
+            + "b.name AS brandName, " // Lấy tên thương hiệu
+            + "pp.price, pp.sale_price, "
+            + "pi_main.image_url AS image_path "
+            + "FROM products p "
+            + "JOIN categories c ON p.category_id = c.id "
+            + "LEFT JOIN brands b ON p.brand_id = b.id " // THÊM JOIN BẢNG BRANDS
+            + "JOIN product_prices pp ON p.id = pp.product_id "
+            + "LEFT JOIN product_images pi_main ON p.id = pi_main.product_id AND pi_main.is_main = 1 "
+            + "WHERE p.id = ? AND p.is_active = 1";
+
+    // ... (logic try-catch, setInt, executeQuery) ...
+    try (Connection conn = DBConnect.getConnection();
+         PreparedStatement ps = conn.prepareStatement(query)) {
+        
+        ps.setInt(1, id);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return mapResultSetToProduct(rs); 
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+
 }
