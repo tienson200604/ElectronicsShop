@@ -56,8 +56,10 @@ public class HomeController extends HttpServlet {
             List<Product> topSellingProducts = productDAO.getProductsByStatus("topselling", 8);
             List<Product> productsListCarousel = productDAO.getProductsByStatus("featured", 4); 
             List<Product> bestSellerMini = productDAO.getProductsByStatus("topselling", 6);
+            List<Category> categoryList = categoryDAO.getAllWithProductCount();
 
             // --- 3. Đặt Attributes vào Request ---
+            request.setAttribute("categoryList", categoryList);
             request.setAttribute("bestSellerProductsPaged", bestSellerProductsPaged);
             request.setAttribute("totalPages", totalPages);
             request.setAttribute("currentPage", page);

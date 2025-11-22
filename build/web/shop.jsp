@@ -399,15 +399,15 @@
                                                         <c:choose>
                                                             <c:when test="${product.salePrice > 0}">
                                                                 <del class="me-2 fs-5 text-danger">
-                                                                    $<fmt:formatNumber value="${product.price}" pattern="#,###.##"/>
+                                                                    $<fmt:formatNumber value="${product.price}" pattern="#,##0"/> ₫
                                                                 </del>
                                                                 <span class="text-primary fs-5">
-                                                                    $<fmt:formatNumber value="${product.salePrice}" pattern="#,###.##"/>
+                                                                    $<fmt:formatNumber value="${product.salePrice}" pattern="#,##0"/> ₫
                                                                 </span>
                                                             </c:when>
                                                             <c:otherwise>
                                                                 <span class="text-primary fs-5">
-                                                                    $<fmt:formatNumber value="${product.price}" pattern="#,###.##"/>
+                                                                    $<fmt:formatNumber value="${product.price}" pattern="#,##0"/> ₫
                                                                 </span>
                                                             </c:otherwise>
                                                         </c:choose>

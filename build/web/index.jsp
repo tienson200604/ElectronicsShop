@@ -372,9 +372,9 @@
                                                 <a href="${contextPath}/product-detail?id=${p.id}" class="d-block h4">${p.name}</a>
                                                 
                                                 <c:if test="${p.salePrice > 0 && p.salePrice < p.price}">
-                                                    <del class="me-2 fs-5 text-danger">$<fmt:formatNumber value="${p.price}" pattern="#,##0.00"/></del>
+                                                    <del class="me-2 fs-5 text-danger">$<fmt:formatNumber value="${p.price}" pattern="#,##0"/> ₫</del>
                                                 </c:if>
-                                                <span class="text-primary fs-5">$<fmt:formatNumber value="${p.effectivePrice}" pattern="#,##0.00"/></span>
+                                                <span class="text-primary fs-5">$<fmt:formatNumber value="${p.effectivePrice}" pattern="#,##0"/> ₫</span>
                                             </div>
                                         </div>
                                         <div class="product-item-add border border-top-0 rounded-bottom text-center p-4 pt-0">

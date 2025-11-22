@@ -14,11 +14,13 @@ public class Product {
     private String description;
     private int warrantyMonths;
     private String brandName;
+    private int stockQuantity;
+    
 
     public Product() {
     }
 
-    public Product(int id, String name, String shortDescription, double price, double salePrice, String imagePath, int categoryId, String categoryName, double effectivePrice, String description, int warrantyMonths, String brandName) {
+    public Product(int id, String name, String shortDescription, double price, double salePrice, String imagePath, int categoryId, String categoryName, double effectivePrice, String description, int warrantyMonths, String brandName, int stockQuantity) {
         this.id = id;
         this.name = name;
         this.shortDescription = shortDescription;
@@ -31,7 +33,18 @@ public class Product {
         this.description = description;
         this.warrantyMonths = warrantyMonths;
         this.brandName = brandName;
+        this.stockQuantity = stockQuantity;
     }
+
+    public int getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public void setStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
+
+    
 
     public String getDescription() {
         return description;
@@ -66,7 +79,7 @@ public class Product {
     }
 
     public double getEffectivePrice() {
-        return effectivePrice;
+        return (salePrice > 0) ? salePrice : price;
     }
 
     public void setCategoryId(int categoryId) {

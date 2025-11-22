@@ -11,41 +11,84 @@ import java.util.List;
 public class ProductDAO {
 
    // Phương thức ánh xạ ResultSet vào đối tượng Product
-    private Product mapResultSetToProduct(ResultSet rs) throws SQLException {
-        Product product = new Product();
-        product.setId(rs.getInt("id"));
-        product.setName(rs.getString("name"));
+private Product mapResultSetToProduct(ResultSet rs) throws SQLException {
+    Product product = new Product();
+
+    // ===== Các cột luôn luôn có trong mọi truy vấn =====
+    product.setId(rs.getInt("id"));
+    product.setName(rs.getString("name"));
+
+    // short_description (có thể không SELECT ở một số query)
+    if (hasColumn(rs, "short_description")) {
         product.setShortDescription(rs.getString("short_description"));
-        
-        // Lấy Category ID và Name
-        // Chú ý: Các trường này phải được SELECT trong truy vấn SQL
-        try {
-            product.setCategoryId(rs.getInt("category_id"));
-        } catch (SQLException e) {
-             // Bỏ qua nếu category_id không có trong ResultSet (để tương thích)
-        }
-        try {
-             product.setCategoryName(rs.getString("category_name"));
-        } catch (SQLException e) {
-             // Bỏ qua nếu category_name không có trong ResultSet
-        }
-        try { product.setDescription(rs.getString("description")); } catch (SQLException e) {}
-    try { product.setWarrantyMonths(rs.getInt("warranty_months")); } catch (SQLException e) {}
-    try { product.setBrandName(rs.getString("brandName")); } catch (SQLException e) {} // Lấy từ alias brandName
-
-        // Gán giá và xử lý NULL
-        product.setPrice(rs.getDouble("price"));
-        double salePrice = rs.getDouble("sale_price");
-        product.setSalePrice(rs.wasNull() ? 0 : salePrice); // Gán 0 nếu NULL
-
-        // Xử lý ảnh mặc định
-        String imageDbPath = rs.getString("image_path");
-        product.setImagePath((imageDbPath == null || imageDbPath.isEmpty()) 
-                                ? "img/default-product.png" 
-                                : imageDbPath);
-        
-        return product;
     }
+
+    // description
+    if (hasColumn(rs, "description")) {
+        product.setDescription(rs.getString("description"));
+    }
+
+    // category_id
+    if (hasColumn(rs, "category_id")) {
+        product.setCategoryId(rs.getInt("category_id"));
+    }
+
+    // category_name (có alias từ bảng categories)
+    if (hasColumn(rs, "category_name")) {
+        product.setCategoryName(rs.getString("category_name"));
+    }
+    if (hasColumn(rs, "stock_quantity")) {
+        product.setStockQuantity(rs.getInt("stock_quantity"));
+    }
+    // warranty_months
+    if (hasColumn(rs, "warranty_months")) {
+        product.setWarrantyMonths(rs.getInt("warranty_months"));
+    }
+
+    // brandName (alias từ bảng brands)
+    if (hasColumn(rs, "brandName")) {
+        String bn = rs.getString("brandName");   // có thể null
+        product.setBrandName(bn);
+    }
+
+    // ===== Giá bán =====
+    double price = 0;
+    if (hasColumn(rs, "price")) {
+        price = rs.getDouble("price");
+    }
+    product.setPrice(price);
+
+    double salePrice = 0;
+    if (hasColumn(rs, "sale_price")) {
+        salePrice = rs.getDouble("sale_price");
+        if (rs.wasNull()) {
+            salePrice = 0; // nếu sale_price null thì để 0
+        }
+    }
+    product.setSalePrice(salePrice);
+
+    // ===== Ảnh sản phẩm =====
+    String imageDbPath = null;
+    if (hasColumn(rs, "image_path")) {
+        imageDbPath = rs.getString("image_path");
+    }
+
+    if (imageDbPath == null || imageDbPath.isEmpty()) {
+        imageDbPath = "img/default-product.png";  // ảnh mặc định
+    }
+    product.setImagePath(imageDbPath);
+
+    return product;
+}
+
+    private boolean hasColumn(ResultSet rs, String columnName) {
+    try {
+        rs.findColumn(columnName);
+        return true;
+    } catch (SQLException e) {
+        return false;
+    }
+}
 
     public List<Product> getAllProducts() {
         // Phương thức này có thể được sử dụng trong HomeController
@@ -301,32 +344,48 @@ public List<Product> getProducts(String keyword, Double maxPrice,
         return list;
     }
     public Product getProductById(int id) {
-    String query = "SELECT p.id, p.name, p.short_description, p.description, p.warranty_months, p.stock_quantity, "
-            + "p.category_id, p.is_active, p.is_top_selling, p.is_featured, p.is_new, "
-            + "c.name AS category_name, "
-            + "b.name AS brandName, " // Lấy tên thương hiệu
-            + "pp.price, pp.sale_price, "
-            + "pi_main.image_url AS image_path "
-            + "FROM products p "
-            + "JOIN categories c ON p.category_id = c.id "
-            + "LEFT JOIN brands b ON p.brand_id = b.id " // THÊM JOIN BẢNG BRANDS
-            + "JOIN product_prices pp ON p.id = pp.product_id "
-            + "LEFT JOIN product_images pi_main ON p.id = pi_main.product_id AND pi_main.is_main = 1 "
-            + "WHERE p.id = ? AND p.is_active = 1";
+    String query =
+        "SELECT " +
+        "  p.id, " +
+        "  p.name, " +
+        "  p.short_description, " +
+        "  p.description, " +
+        "  p.warranty_months, " +
+        "  p.stock_quantity, " +
+        "  p.category_id, " +
+        "  p.is_active, " +
+        "  p.is_top_selling, " +
+        "  p.is_featured, " +
+        "  p.is_new, " +
+        "  c.name AS category_name, " +
+        "  b.name AS brandName, " +
+        "  pp.price, " +
+        "  pp.sale_price, " +
+        "  pi_main.image_url AS image_path " +
+        "FROM products p " +
+        "JOIN categories c ON p.category_id = c.id " +
+        "LEFT JOIN brands b ON p.brand_id = b.id " +
+        "JOIN product_prices pp ON p.id = pp.product_id " +
+        "LEFT JOIN product_images pi_main " +
+        "       ON p.id = pi_main.product_id AND pi_main.is_main = 1 " +
+        "WHERE p.id = ? AND p.is_active = 1";
 
-    // ... (logic try-catch, setInt, executeQuery) ...
     try (Connection conn = DBConnect.getConnection();
          PreparedStatement ps = conn.prepareStatement(query)) {
-        
+
         ps.setInt(1, id);
+
         try (ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
-                return mapResultSetToProduct(rs); 
+                return mapResultSetToProduct(rs);
             }
         }
+
     } catch (SQLException e) {
+        System.err.println("❌ SQL Error in getProductById(" + id + "): " + e.getMessage());
         e.printStackTrace();
     }
+
     return null;
 }
 

@@ -29,40 +29,42 @@
     </head>
     <style>
         .header-categories .btn {
-    font-weight: 600;
-    font-size: 16px;
-    background-color: #f58b0a; /* cam đậm hơn một chút */
-    border-color: #f58b0a;
-}
+            font-weight: 600;
+            font-size: 16px;
+            background-color: #f58b0a; /* cam đậm hơn một chút */
+            border-color: #f58b0a;
+        }
 
-.header-categories .btn:hover {
-    background-color: #ff9f1a;
-    border-color: #ff9f1a;
-}
+        .header-categories .btn:hover {
+            background-color: #ff9f1a;
+            border-color: #ff9f1a;
+        }
 
-.header-categories .dropdown-menu {
-    border-radius: 0 0 10px 10px;
-    max-height: 360px;
-    overflow-y: auto;
-}
+        .header-categories .dropdown-menu {
+            border-radius: 0 0 10px 10px;
+            max-height: 360px;
+            overflow-y: auto;
+        }
 
-.header-categories .dropdown-item {
-    padding: 10px 16px;
-}
+        .header-categories .dropdown-item {
+            padding: 10px 16px;
+        }
 
-.header-categories .dropdown-item:hover {
-    background-color: #fff3e0;
-}
+        .header-categories .dropdown-item:hover {
+            background-color: #fff3e0;
+        }
 
     </style>
 
     <body>
 
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
+        <div id="spinner"
+     class="bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"
+     style="opacity:0; visibility:hidden;">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
         <div class="container-fluid px-5 d-none border-bottom d-lg-block">
             <div class="row gx-0 align-items-center">
                 <div class="col-lg-4 text-center text-lg-start mb-lg-0">
@@ -83,7 +85,7 @@
                             <a href="#" class="dropdown-toggle text-muted ms-2" data-bs-toggle="dropdown"><small><i class="fa fa-home me-2"></i> My Dashboard</small></a>
                             <div class="dropdown-menu rounded">
                                 <a href="login.jsp" class="dropdown-item"> Login</a>
-                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -100,11 +102,11 @@
                 </div>
                 <div class="col-md-4 col-lg-6 text-center">
                     <div class="position-relative ps-4">
-                         <div class="d-flex border rounded-pill">
+                        <div class="d-flex border rounded-pill">
                             <input class="form-control border-0 rounded-pill w-100 py-3" type="text" placeholder="Search Looking For?">
                             <select class="form-select text-dark border-0 border-start rounded-0 p-3" style="width: 200px;">
                                 <option value="All Category">All Category</option>
-                                </select>
+                            </select>
                             <button type="button" class="btn btn-primary rounded-pill py-3 px-5" style="border: 0;"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
@@ -118,7 +120,7 @@
                 </div>
             </div>
         </div>
-         <!-- ========== NAVBAR + ALL CATEGORIES ========== -->
+        <!-- ========== NAVBAR + ALL CATEGORIES ========== -->
         <div class="container-fluid nav-bar p-0">
             <div class="row gx-0 bg-primary px-5 align-items-center">
 
@@ -140,29 +142,29 @@
                         <ul class="dropdown-menu w-100 border-0 shadow-sm mt-0"
                             aria-labelledby="dropdownCategories">
 
-                            <c:if test="${not empty categoryList}">
-                                <c:forEach var="cat" items="${categoryList}">
-                                    <c:url var="catUrl" value="/shop">
-                                        <c:param name="categoryId" value="${cat.id}"/>
-                                    </c:url>
+                            <%-- ĐẢM BẢO categoryList LUÔN ĐƯỢC KIỂM TRA --%>
+                            <c:choose>
+                                <c:when test="${not empty categoryList}">
+                                    <c:forEach var="cat" items="${categoryList}">
+                                        <c:url var="catUrl" value="/shop">
+                                            <c:param name="categoryId" value="${cat.id}"/>
+                                        </c:url>
 
-                                    <li>
-                                        <a class="dropdown-item d-flex justify-content-between align-items-center"
-                                           href="${catUrl}">
-                                            <span>${cat.name}</span>
-                                            <span class="text-muted small">
-                                                (${cat.productCount})
-                                            </span>
-                                        </a>
-                                    </li>
-                                </c:forEach>
-                            </c:if>
-
-                            <!-- Nếu chưa truyền categoryList xuống header thì hiện tĩnh vài mục -->
-                            <c:if test="${empty categoryList}">
-                                <li><span class="dropdown-item text-muted">No categories</span></li>
-                            </c:if>
-
+                                        <li>
+                                            <a class="dropdown-item d-flex justify-content-between align-items-center"
+                                               href="${catUrl}">
+                                                <span>${cat.name}</span>
+                                                <span class="text-muted small">
+                                                    (${cat.productCount})
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <li><span class="dropdown-item text-muted">No categories loaded</span></li>
+                                    </c:otherwise>
+                                </c:choose>
                         </ul>
                     </div>
                 </div>
@@ -212,4 +214,3 @@
             </div>
         </div>
         <!-- ========== END NAVBAR ========== -->
-        
