@@ -12,8 +12,7 @@ public class UserDAO {
 
         String sql = "SELECT * FROM users WHERE username = ?";
 
-        try (Connection conn = DBConnect.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try ( Connection conn = DBConnect.getConnection();  PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
@@ -31,8 +30,7 @@ public class UserDAO {
     public static boolean updateVerification(String email, String code, Timestamp expiresAt) {
         String sql = "UPDATE users SET verification_code=?, verification_expires_at=? WHERE email=?";
 
-        try (Connection conn = DBConnect.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try ( Connection conn = DBConnect.getConnection();  PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, code);
             stmt.setTimestamp(2, expiresAt);
@@ -50,8 +48,7 @@ public class UserDAO {
     public static boolean verifyEmail(String email) {
         String sql = "UPDATE users SET email_verified = 1, verification_code = NULL, verification_expires_at = NULL WHERE email = ?";
 
-        try (Connection conn = DBConnect.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try ( Connection conn = DBConnect.getConnection();  PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, email);
             return stmt.executeUpdate() > 0;
@@ -77,51 +74,76 @@ public class UserDAO {
         u.setVerificationExpiresAt(rs.getString("verification_expires_at"));
         return u;
     }
+
     public static User getUserByEmail(String email) {
-    User user = null;
-    String sql = "SELECT * FROM users WHERE email=?";
+        User user = null;
+        String sql = "SELECT * FROM users WHERE email=?";
 
-    try (Connection conn = DBConnect.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try ( Connection conn = DBConnect.getConnection();  PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        stmt.setString(1, email);
-        ResultSet rs = stmt.executeQuery();
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
 
-        if (rs.next()) {
-            user = mapRowToUser(rs);
+            if (rs.next()) {
+                user = mapRowToUser(rs);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-    } catch (Exception e) {
-        e.printStackTrace();
+        return user;
     }
 
-    return user;
-}
+    public static int insertNewUser(String username, String password, String fullName, String email, String phone) {
+        String sql = "INSERT INTO users(username, password_hash, full_name, email, phone, role_id, email_verified) VALUES (?, ?, ?, ?, ?, 2, 0)";
 
-public static int insertNewUser(String username, String password, String fullName, String email, String phone) {
-    String sql = "INSERT INTO users(username, password_hash, full_name, email, phone, role_id, email_verified) VALUES (?, ?, ?, ?, ?, 2, 0)";
+        try ( Connection conn = DBConnect.getConnection();  PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-    try (Connection conn = DBConnect.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            stmt.setString(3, fullName);
+            stmt.setString(4, email);
+            stmt.setString(5, phone);
 
-        stmt.setString(1, username);
-        stmt.setString(2, password);
-        stmt.setString(3, fullName);
-        stmt.setString(4, email);
-        stmt.setString(5, phone);
+            int affected = stmt.executeUpdate();
+            if (affected == 0) {
+                return -1;
+            }
 
-        int affected = stmt.executeUpdate();
-        if (affected == 0) return -1;
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
 
-        ResultSet rs = stmt.getGeneratedKeys();
-        if (rs.next()) return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-    } catch (Exception e) {
-        e.printStackTrace();
+        return -1;
     }
 
-    return -1;
-}
+    public static User checkLogin(String username, String password) {
+        User user = null;
+
+        String sql = "SELECT * FROM users WHERE username = ? AND password_hash = ?";
+
+        try ( Connection conn = DBConnect.getConnection();  PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                user = mapRowToUser(rs);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
 
 }
-    

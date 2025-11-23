@@ -1,165 +1,133 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <c:set var="pageTitle" value="Electro - Trang chủ" scope="request"/>
 <c:set var="pageActive" value="Home" scope="request"/>
 <fmt:setLocale value="vi_VN" scope="session"/>
 
-<!DOCTYPE html>
-<html lang="vi">
-
-<head>
-    <meta charset="utf-8">
-    <title>${pageTitle}</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <link href="${contextPath}/lib/animate/animate.min.css" rel="stylesheet">
-    <link href="${contextPath}/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
-    <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}/css/style.css" rel="stylesheet">
-
-    <%-- STYLE PHÂN TRANG + DỊCH VỤ --%>
-    <style>
-        .text-orange {
-            color: #ff7a00;
-        }
-
-        .service-box {
-            height: 120px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-        }
-
-        .service-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 12px;
-        }
-
-        .service-title {
-            color: #ff7a00;
-        }
-
-        /* ===== Pagination ===== */
-        .shop .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .shop .pagination .page-item {
-            display: inline-block;
-        }
-
-        .shop .pagination .page-link {
-            min-width: 42px;
-            height: 42px;
-            padding: 0;
-            line-height: 40px;
-            text-align: center;
-            border-radius: 16px;
-            border: 2px solid #ff7a00;
-            background-color: #ffffff;
-            color: #ff7a00;
-            font-weight: 500;
-        }
-
-        .shop .pagination .page-item.active .page-link {
-            background-color: #ff7a00;
-            color: #ffffff;
-        }
-
-        .shop .pagination .page-item.disabled .page-link {
-            border-color: #ffd0a0;
-            color: #ccc;
-        }
-
-        /* ===== Sidebar Categories ===== */
-        .category-widget {
-            border-radius: 18px;
-            background: #ffffff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            padding: 20px 18px;
-        }
-        .category-title {
-            font-weight: 700;
-            font-size: 18px;
-            margin-bottom: 16px;
-            color: #ff7a00;
-        }
-        .category-list {
-            list-style: none;
-            padding-left: 0;
-            margin-bottom: 0;
-        }
-        .category-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 6px 4px;
-            margin-bottom: 4px;
-            border-radius: 10px;
-            transition: background 0.2s, transform 0.1s;
-        }
-        .category-item a {
-            text-decoration: none;
-            color: #444;
-            display: flex;
-            align-items: center;
-            flex: 1;
-        }
-        .category-item i {
-            color: #ff7a00;
-            margin-right: 8px;
-            font-size: 14px;
-        }
-        .category-badge {
-            font-size: 13px;
-            color: #ff7a00;
-        }
-        .category-item:hover {
-            background: #fff3e0;
-            transform: translateX(2px);
-        }
-        .category-item.active {
-            background: #ff7a00;
-        }
-        .category-item.active a,
-        .category-item.active .category-badge {
-            color: #fff;
-            font-weight: 600;
-        }
-    </style>
-
-</head>
-
-<body>
-
 <jsp:include page="/common/header.jsp" />
-<%-- Lấy ra 1 sản phẩm cho banner phải, 2 sản phẩm cho Offer --%>
-<c:set var="bannerProduct" value="${not empty bestSellerProductsPaged ? bestSellerProductsPaged[0] : null}" />
-<c:set var="offer1" value="${not empty featuredProducts ? featuredProducts[0] : null}" />
-<c:set var="offer2" value="${fn:length(featuredProducts) > 1 ? featuredProducts[1] : null}" />
+
+<%-- ==== CSS riêng cho trang Home (tạm để đây, sau rảnh thì copy sang style.css) ==== --%>
+<style>
+    .text-orange {
+        color: #ff7a00;
+    }
+
+    .service-box {
+        height: 120px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    .service-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 12px;
+    }
+
+    .service-title {
+        color: #ff7a00;
+    }
+
+    /* ===== Pagination ===== */
+    .shop .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+    .shop .pagination .page-item {
+        display: inline-block;
+    }
+    .shop .pagination .page-link {
+        min-width: 42px;
+        height: 42px;
+        padding: 0;
+        line-height: 40px;
+        text-align: center;
+        border-radius: 16px;
+        border: 2px solid #ff7a00;
+        background-color: #ffffff;
+        color: #ff7a00;
+        font-weight: 500;
+    }
+    .shop .pagination .page-item.active .page-link {
+        background-color: #ff7a00;
+        color: #ffffff;
+    }
+    .shop .pagination .page-item.disabled .page-link {
+        border-color: #ffd0a0;
+        color: #ccc;
+    }
+
+    /* ===== Sidebar Categories ===== */
+    .category-widget {
+        border-radius: 18px;
+        background: #ffffff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        padding: 20px 18px;
+    }
+    .category-title {
+        font-weight: 700;
+        font-size: 18px;
+        margin-bottom: 16px;
+        color: #ff7a00;
+    }
+    .category-list {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+    .category-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 6px 4px;
+        margin-bottom: 4px;
+        border-radius: 10px;
+        transition: background 0.2s, transform 0.1s;
+    }
+    .category-item a {
+        text-decoration: none;
+        color: #444;
+        display: flex;
+        align-items: center;
+        flex: 1;
+    }
+    .category-item i {
+        color: #ff7a00;
+        margin-right: 8px;
+        font-size: 14px;
+    }
+    .category-badge {
+        font-size: 13px;
+        color: #ff7a00;
+    }
+    .category-item:hover {
+        background: #fff3e0;
+        transform: translateX(2px);
+    }
+    .category-item.active {
+        background: #ff7a00;
+    }
+    .category-item.active a,
+    .category-item.active .category-badge {
+        color: #fff;
+        font-weight: 600;
+    }
+</style>
+
+<%-- ================== NỘI DUNG TRANG HOME ================== --%>
+
 <%-- CAROUSEL START --%>
 <div class="container-fluid carousel bg-light px-0">
     <div class="row g-0 justify-content-end">
@@ -238,6 +206,7 @@
         </div>
     </div>
 </div>
+<%-- CAROUSEL END --%>
 
 <%-- Services Start --%>
 <div class="container-fluid py-5">
@@ -253,7 +222,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-lg-2 col-md-4 col-sm-6 pb-4">
             <div class="d-flex align-items-center service-box mb-4 px-3">
                 <div class="service-icon">
@@ -265,7 +233,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-lg-2 col-md-4 col-sm-6 pb-4">
             <div class="d-flex align-items-center service-box mb-4 px-3">
                 <div class="service-icon">
@@ -277,7 +244,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-lg-2 col-md-4 col-sm-6 pb-4">
             <div class="d-flex align-items-center service-box mb-4 px-3">
                 <div class="service-icon">
@@ -289,7 +255,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-lg-2 col-md-4 col-sm-6 pb-4">
             <div class="d-flex align-items-center service-box mb-4 px-3">
                 <div class="service-icon">
@@ -301,7 +266,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-lg-2 col-md-4 col-sm-6 pb-4">
             <div class="d-flex align-items-center service-box mb-4 px-3">
                 <div class="service-icon">
@@ -332,7 +296,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-6 mb-3">
             <div class="position-relative overflow-hidden bg-light" style="height: 260px;">
                 <img class="img-fluid position-absolute w-100 h-100"
@@ -382,7 +345,6 @@
             </div>
 
             <div class="tab-content">
-
                 <%-- TAB 1: BEST SELLER --%>
                 <div id="tab-1" class="tab-pane fade show p-0 active">
                     <div class="row g-4">
@@ -669,13 +631,4 @@
 </div>
 <%-- PRODUCT BANNER END --%>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="${contextPath}/lib/wow/wow.min.js"></script>
-<script src="${contextPath}/lib/owlcarousel/owl.carousel.min.js"></script>
-
 <jsp:include page="/common/footer.jsp" />
-
-<script src="${contextPath}/js/main.js"></script>
-</body>
-</html>

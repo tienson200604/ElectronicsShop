@@ -78,10 +78,38 @@
                     <div class="d-inline-flex align-items-center" style="height: 45px;">
                         <div class="dropdown">
                             <a href="#" class="dropdown-toggle text-muted ms-2" data-bs-toggle="dropdown">
-                                <small><i class="fa fa-home me-2"></i> Tài khoản</small>
+                                <small>
+                                    <i class="fa fa-home me-2"></i>
+                                    <c:if test="${not empty sessionScope.user}">
+                                        Xin chào, ${sessionScope.user.fullName}
+                                    </c:if>
+                                    <c:if test="${empty sessionScope.user}">
+                                        Tài khoản
+                                    </c:if>
+                                </small>
                             </a>
+
                             <div class="dropdown-menu rounded">
-                                <a href="login.jsp" class="dropdown-item">Đăng nhập</a>
+                                <!-- ĐÃ ĐĂNG NHẬP -->
+                                <c:if test="${not empty sessionScope.user}">
+                                    <a href="${pageContext.request.contextPath}/profile" class="dropdown-item">
+                                        Thông tin cá nhân
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="${pageContext.request.contextPath}/logout" class="dropdown-item text-danger">
+                                        Đăng xuất
+                                    </a>
+                                </c:if>
+
+                                <!-- CHƯA ĐĂNG NHẬP -->
+                                <c:if test="${empty sessionScope.user}">
+                                    <a href="${pageContext.request.contextPath}/login" class="dropdown-item">
+                                        Đăng nhập
+                                    </a>
+                                    <a href="${pageContext.request.contextPath}/register" class="dropdown-item">
+                                        Đăng ký
+                                    </a>
+                                </c:if>
                             </div>
                         </div>
                     </div>
