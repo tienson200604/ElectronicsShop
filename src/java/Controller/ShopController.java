@@ -14,39 +14,51 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "ShopController", urlPatterns = {"/shop"})
 public class ShopController extends HttpServlet {
-    
+
     private final ProductDAO productDAO = new ProductDAO();
     private final CategoryDao categoryDAO = new CategoryDao();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         final int PAGE_SIZE = 9;
 
-        String keyword = request.getParameter("keyword");
-        String sort = request.getParameter("sort");
-        String maxPriceStr = request.getParameter("maxPrice");
-        String categoryIdStr = request.getParameter("categoryId");
+        // ---- TIÊU ĐỀ & MENU ACTIVE (TIẾNG VIỆT) ----
+        request.setAttribute("pageTitle", "Electro - Sản phẩm");
+        request.setAttribute("pageActive", "Shop");
 
-        Double maxPrice = null;
+        String keyword      = request.getParameter("keyword");
+        String sort         = request.getParameter("sort");
+        String maxPriceStr  = request.getParameter("maxPrice");
+        String categoryIdStr= request.getParameter("categoryId");
+
+        Double  maxPrice   = null;
+        Integer categoryId = null;
+
         if (maxPriceStr != null && !maxPriceStr.trim().isEmpty()) {
-            try { maxPrice = Double.parseDouble(maxPriceStr); } catch (NumberFormatException ignored) {}
+            try {
+                maxPrice = Double.parseDouble(maxPriceStr);
+            } catch (NumberFormatException ignored) {}
         }
 
-        Integer categoryId = null;
         if (categoryIdStr != null && !categoryIdStr.trim().isEmpty()) {
-            try { categoryId = Integer.parseInt(categoryIdStr); } catch (NumberFormatException ignored) {}
+            try {
+                categoryId = Integer.parseInt(categoryIdStr);
+            } catch (NumberFormatException ignored) {}
         }
 
         try {
-            String pageStr = request.getParameter("page");
+            // ----- PHÂN TRANG -----
             int currentPage = 1;
+            String pageStr = request.getParameter("page");
             if (pageStr != null) {
-                try { currentPage = Integer.parseInt(pageStr); } catch (NumberFormatException ignored) {}
+                try {
+                    currentPage = Integer.parseInt(pageStr);
+                } catch (NumberFormatException ignored) {}
             }
-            
-            // SỬ DỤNG HÀM COUNT MỚI (Thêm null cho tham số status, vì ShopController không lọc theo trạng thái)
-            int totalProducts = productDAO.countProducts(keyword, maxPrice, categoryId, null); 
+
+            int totalProducts = productDAO.countProducts(keyword, maxPrice, categoryId, null);
             int totalPages = (int) Math.ceil(totalProducts / (double) PAGE_SIZE);
             if (totalPages < 1) totalPages = 1;
 
@@ -54,13 +66,15 @@ public class ShopController extends HttpServlet {
             if (currentPage > totalPages) currentPage = totalPages;
 
             int offset = (currentPage - 1) * PAGE_SIZE;
-            
-            // SỬ DỤNG HÀM GET MỚI (Thêm null cho tham số status)
+
+            // ----- LẤY DANH SÁCH SẢN PHẨM -----
             List<Product> productList =
                     productDAO.getProducts(keyword, maxPrice, sort, categoryId, offset, PAGE_SIZE, null);
 
+            // ----- LẤY DANH MỤC (CHO SIDEBAR + HEADER) -----
             List<Category> categoryList = categoryDAO.getAllWithProductCount();
 
+            // ----- SET ATTRIBUTE RA JSP -----
             request.setAttribute("productList", productList);
             request.setAttribute("currentPage", currentPage);
             request.setAttribute("totalPages", totalPages);

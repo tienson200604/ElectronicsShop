@@ -2,10 +2,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%-- Đặt các biến dùng chung --%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="pageTitle" value="Shop Products - Electro" scope="request"/>
+<c:set var="pageTitle" value="Electro - Sản phẩm" scope="request"/>
 <c:set var="pageActive" value="Shop" scope="request"/>
+<fmt:setLocale value="vi_VN" scope="session"/>
 
 <jsp:include page="/common/header.jsp" />
 
@@ -13,14 +13,12 @@
     .text-orange {
         color: #ff7a00;
     }
-
     .service-box {
         height: 120px;
         border-radius: 14px;
         background: linear-gradient(135deg, #fff3e0, #ffe0b2);
         box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
-
     .service-icon {
         width: 48px;
         height: 48px;
@@ -31,23 +29,18 @@
         justify-content: center;
         margin-right: 12px;
     }
-
     .service-title {
         color: #ff7a00;
     }
-
-    /* ===== Pagination ===== */
     .shop .pagination {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 10px;
     }
-
     .shop .pagination .page-item {
         display: inline-block;
     }
-
     .shop .pagination .page-link {
         min-width: 42px;
         height: 42px;
@@ -60,18 +53,14 @@
         color: #ff7a00;
         font-weight: 500;
     }
-
     .shop .pagination .page-item.active .page-link {
         background-color: #ff7a00;
         color: #ffffff;
     }
-
     .shop .pagination .page-item.disabled .page-link {
         border-color: #ffd0a0;
         color: #ccc;
     }
-
-    /* ===== Sidebar Categories ===== */
     .category-widget {
         border-radius: 18px;
         background: #ffffff;
@@ -130,16 +119,16 @@
 
 <div class="container-fluid page-header py-5">
     <h1 class="text-center text-white display-6 wow fadeInUp" data-wow-delay="0.1s">
-        Shop Page
+        Cửa hàng
     </h1>
     <ol class="breadcrumb justify-content-center mb-0 wow fadeInUp" data-wow-delay="0.3s">
-        <li class="breadcrumb-item"><a href="${contextPath}/">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Pages</a></li>
-        <li class="breadcrumb-item active text-white">Shop</li>
+        <li class="breadcrumb-item"><a href="${contextPath}/">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a href="#">Trang</a></li>
+        <li class="breadcrumb-item active text-white">Cửa hàng</li>
     </ol>
 </div>
 
-<!-- Services Start -->
+<%-- Services Start --%>
 <div class="container-fluid py-5">
     <div class="row px-xl-5">
         <div class="col-lg-2 col-md-4 col-sm-6 pb-4">
@@ -148,8 +137,8 @@
                     <i class="fa fa-sync-alt fa-lg text-orange"></i>
                 </div>
                 <div class="d-flex flex-column">
-                    <h6 class="font-weight-semi-bold mb-1 service-title">FREE RETURN</h6>
-                    <small>30 days money back guarantee!</small>
+                    <h6 class="font-weight-semi-bold mb-1 service-title">ĐỔI TRẢ MIỄN PHÍ</h6>
+                    <small>Hoàn tiền trong 30 ngày</small>
                 </div>
             </div>
         </div>
@@ -160,8 +149,8 @@
                     <i class="fa fa-paper-plane fa-lg text-orange"></i>
                 </div>
                 <div class="d-flex flex-column">
-                    <h6 class="font-weight-semi-bold mb-1 service-title">FREE SHIPPING</h6>
-                    <small>Miễn phí vận chuyển</small>
+                    <h6 class="font-weight-semi-bold mb-1 service-title">MIỄN PHÍ GIAO HÀNG</h6>
+                    <small>Áp dụng điều kiện</small>
                 </div>
             </div>
         </div>
@@ -172,8 +161,8 @@
                     <i class="fa fa-headset fa-lg text-orange"></i>
                 </div>
                 <div class="d-flex flex-column">
-                    <h6 class="font-weight-semi-bold mb-1 service-title">SUPPORT 24/7</h6>
-                    <small>Hỗ trợ 24/7</small>
+                    <h6 class="font-weight-semi-bold mb-1 service-title">HỖ TRỢ 24/7</h6>
+                    <small>Tư vấn tận tâm</small>
                 </div>
             </div>
         </div>
@@ -184,8 +173,8 @@
                     <i class="fa fa-gift fa-lg text-orange"></i>
                 </div>
                 <div class="d-flex flex-column">
-                    <h6 class="font-weight-semi-bold mb-1 service-title">GIFT CARD</h6>
-                    <small>Tặng voucher cho đơn > 1tr</small>
+                    <h6 class="font-weight-semi-bold mb-1 service-title">VOUCHER QUÀ TẶNG</h6>
+                    <small>Mua càng nhiều, ưu đãi càng lớn</small>
                 </div>
             </div>
         </div>
@@ -196,8 +185,8 @@
                     <i class="fa fa-lock fa-lg text-orange"></i>
                 </div>
                 <div class="d-flex flex-column">
-                    <h6 class="font-weight-semi-bold mb-1 service-title">SECURE PAYMENT</h6>
-                    <small>Thanh toán an toàn</small>
+                    <h6 class="font-weight-semi-bold mb-1 service-title">THANH TOÁN AN TOÀN</h6>
+                    <small>Bảo mật thông tin</small>
                 </div>
             </div>
         </div>
@@ -208,53 +197,54 @@
                     <i class="fa fa-broadcast-tower fa-lg text-orange"></i>
                 </div>
                 <div class="d-flex flex-column">
-                    <h6 class="font-weight-semi-bold mb-1 service-title">ONLINE SERVICE</h6>
-                    <small>Đổi trả trong 30 ngày</small>
+                    <h6 class="font-weight-semi-bold mb-1 service-title">MUA SẮM ONLINE</h6>
+                    <small>Đặt hàng mọi lúc mọi nơi</small>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Services End -->
+<%-- Services End --%>
 
-<!-- Offer Start -->
+<%-- Offer Start --%>
 <div class="container-fluid pt-3 pb-5">
     <div class="row px-xl-5">
         <div class="col-md-6 mb-3">
             <div class="position-relative overflow-hidden bg-light" style="height: 260px;">
-                <img class="img-fluid position-absolute w-100 h-100" src="img/offer-1.jpg" style="object-fit: cover;" alt="">
+                <img class="img-fluid position-absolute w-100 h-100"
+                     src="${contextPath}/img/offer-1.jpg" style="object-fit: cover;" alt="">
                 <div class="position-absolute d-flex flex-column align-items-start justify-content-center h-100 p-4">
-                    <h5 class="text-uppercase">Find The Best Camera for You!</h5>
+                    <h5 class="text-uppercase">Chọn máy ảnh phù hợp cho bạn!</h5>
                     <h2 class="font-weight-bold">Smart Camera</h2>
-                    <h3 class="font-weight-bold text-orange">40% Off</h3>
-                    <a href="shop" class="btn btn-outline-dark mt-2">Shop Now</a>
+                    <h3 class="font-weight-bold text-orange">Giảm 40%</h3>
+                    <a href="${contextPath}/shop" class="btn btn-outline-dark mt-2">Mua ngay</a>
                 </div>
             </div>
         </div>
 
         <div class="col-md-6 mb-3">
             <div class="position-relative overflow-hidden bg-light" style="height: 260px;">
-                <img class="img-fluid position-absolute w-100 h-100" src="img/offer-2.jpg" style="object-fit: cover;" alt="">
+                <img class="img-fluid position-absolute w-100 h-100"
+                     src="${contextPath}/img/offer-2.jpg" style="object-fit: cover;" alt="">
                 <div class="position-absolute d-flex flex-column align-items-start justify-content-center h-100 p-4">
-                    <h5 class="text-uppercase">Find The Best Watches for You!</h5>
+                    <h5 class="text-uppercase">Chọn đồng hồ yêu thích!</h5>
                     <h2 class="font-weight-bold">Smart Watch</h2>
-                    <h3 class="font-weight-bold text-orange">20% Off</h3>
-                    <a href="shop" class="btn btn-outline-dark mt-2">Shop Now</a>
+                    <h3 class="font-weight-bold text-orange">Giảm 20%</h3>
+                    <a href="${contextPath}/shop" class="btn btn-outline-dark mt-2">Mua ngay</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Offer End -->
+<%-- Offer End --%>
 
-<!-- Filter & Search Start -->
+<%-- Filter & Search Start --%>
 <div class="container-fluid bg-light py-3">
     <div class="container">
         <form class="row g-3 align-items-center" action="${contextPath}/shop" method="get">
 
-            <!-- Price slider -->
             <div class="col-lg-4 col-md-6">
-                <label class="form-label mb-1 fw-semibold">Price</label>
+                <label class="form-label mb-1 fw-semibold">Giá tối đa</label>
                 <input type="range"
                        class="form-range"
                        min="0"
@@ -268,18 +258,17 @@
                     <small>
                         <span id="priceValue">
                             ${empty param.maxPrice ? 20000000 : param.maxPrice}
-                        </span> đ
+                        </span> ₫
                     </small>
                 </div>
             </div>
 
-            <!-- Search by name -->
             <div class="col-lg-5 col-md-6">
-                <label class="form-label mb-1 fw-semibold">Search</label>
+                <label class="form-label mb-1 fw-semibold">Tìm kiếm</label>
                 <div class="input-group">
                     <input type="text"
                            class="form-control"
-                           placeholder="keywords"
+                           placeholder="Nhập từ khóa sản phẩm"
                            name="keyword"
                            value="${param.keyword}">
                     <button class="btn btn-outline-secondary" type="submit">
@@ -288,29 +277,28 @@
                 </div>
             </div>
 
-            <!-- Sort -->
             <div class="col-lg-3 col-md-6">
-                <label class="form-label mb-1 fw-semibold">Sort By:</label>
+                <label class="form-label mb-1 fw-semibold">Sắp xếp</label>
                 <select class="form-select" name="sort">
-                    <option value="">Default Sorting</option>
-                    <option value="priceAsc"  ${param.sort == 'priceAsc'  ? 'selected' : ''}>Price: Low → High</option>
-                    <option value="priceDesc" ${param.sort == 'priceDesc' ? 'selected' : ''}>Price: High → Low</option>
+                    <option value="">Mặc định</option>
+                    <option value="priceAsc"  ${param.sort == 'priceAsc'  ? 'selected' : ''}>Giá: Thấp → Cao</option>
+                    <option value="priceDesc" ${param.sort == 'priceDesc' ? 'selected' : ''}>Giá: Cao → Thấp</option>
                 </select>
             </div>
 
         </form>
     </div>
 </div>
-<!-- Filter & Search End -->
+<%-- Filter & Search End --%>
 
 <div class="container-fluid shop py-5">
     <div class="container py-5">
         <div class="row g-4">
 
-            <!-- SIDEBAR CATEGORIES -->
+            <%-- SIDEBAR CATEGORIES --%>
             <div class="col-lg-3 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="category-widget mb-4">
-                    <div class="category-title">Products Categories</div>
+                    <div class="category-title">Danh mục sản phẩm</div>
                     <ul class="category-list">
                         <c:forEach var="cat" items="${categoryList}">
 
@@ -364,7 +352,7 @@
                 </div>
             </div>
 
-            <!-- PRODUCT LIST -->
+            <%-- PRODUCT LIST --%>
             <div class="col-lg-9 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="tab-content">
                     <div id="tab-5" class="tab-pane fade show p-0 active">
@@ -380,10 +368,12 @@
                                                         <img src="${contextPath}/${product.imagePath}"
                                                              class="img-fluid w-100 rounded-top"
                                                              alt="${product.name}">
-                                                        <div class="product-new">New</div>
+                                                        <div class="product-new">Mới</div>
                                                         <div class="product-details">
-    <a href="${contextPath}/product-detail?id=${product.id}"><i class="fa fa-eye fa-1x"></i></a>
-</div>
+                                                            <a href="${contextPath}/product-detail?id=${product.id}">
+                                                                <i class="fa fa-eye fa-1x"></i>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                     <div class="text-center rounded-bottom p-4">
                                                         <a href="${contextPath}/product-detail?id=${product.id}"
@@ -395,28 +385,28 @@
                                                             ${product.name}
                                                         </a>
 
-                                                        <fmt:setLocale value="vi_VN" scope="session"/>
                                                         <c:choose>
                                                             <c:when test="${product.salePrice > 0}">
                                                                 <del class="me-2 fs-5 text-danger">
-                                                                    $<fmt:formatNumber value="${product.price}" pattern="#,##0"/> ₫
+                                                                    <fmt:formatNumber value="${product.price}" pattern="#,##0"/> ₫
                                                                 </del>
                                                                 <span class="text-primary fs-5">
-                                                                    $<fmt:formatNumber value="${product.salePrice}" pattern="#,##0"/> ₫
+                                                                    <fmt:formatNumber value="${product.salePrice}" pattern="#,##0"/> ₫
                                                                 </span>
                                                             </c:when>
                                                             <c:otherwise>
                                                                 <span class="text-primary fs-5">
-                                                                    $<fmt:formatNumber value="${product.price}" pattern="#,##0"/> ₫
+                                                                    <fmt:formatNumber value="${product.price}" pattern="#,##0"/> ₫
                                                                 </span>
                                                             </c:otherwise>
                                                         </c:choose>
                                                     </div>
                                                 </div>
                                                 <div class="product-item-add border border-top-0 rounded-bottom text-center p-4 pt-0">
-                                                    <a href="${contextPath}/cart/add?id=${product.id}"
+                                                    <%-- SỬA ĐÚNG ĐƯỜNG DẪN ADD TO CART --%>
+                                                    <a href="${contextPath}/cart?action=add&pid=${product.id}"
                                                        class="btn btn-primary border-secondary rounded-pill py-2 px-4 mb-4">
-                                                        <i class="fas fa-shopping-cart me-2"></i> Add To Cart
+                                                        <i class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ
                                                     </a>
                                                 </div>
                                             </div>
@@ -430,13 +420,12 @@
                                 </c:otherwise>
                             </c:choose>
 
-                            <!-- Pagination -->
+                            <%-- Pagination --%>
                             <c:if test="${totalPages > 1}">
                                 <div class="d-flex justify-content-center mt-4">
                                     <nav aria-label="Page navigation">
                                         <ul class="pagination mb-0">
 
-                                            <!-- Prev -->
                                             <c:url var="prevUrl" value="/shop">
                                                 <c:param name="page" value="${currentPage - 1}" />
                                                 <c:if test="${not empty param.keyword}">
@@ -456,7 +445,6 @@
                                                 <a class="page-link" href="${prevUrl}">&laquo;</a>
                                             </li>
 
-                                            <!-- Numbered pages -->
                                             <c:forEach var="i" begin="1" end="${totalPages}">
                                                 <c:url var="pageUrl" value="/shop">
                                                     <c:param name="page" value="${i}" />
@@ -478,7 +466,6 @@
                                                 </li>
                                             </c:forEach>
 
-                                            <!-- Next -->
                                             <c:url var="nextUrl" value="/shop">
                                                 <c:param name="page" value="${currentPage + 1}" />
                                                 <c:if test="${not empty param.keyword}">
@@ -512,6 +499,7 @@
 
                 </div>
             </div>
+
         </div>
     </div>
 </div>

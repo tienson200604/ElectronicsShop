@@ -49,22 +49,22 @@
             </p>
 
             <div class="mb-3">
-    <c:choose>
-        <c:when test="${product.salePrice gt 0}">
-            <del class="text-danger fs-5 me-2">
-                <fmt:formatNumber value="${product.price}" pattern="#,##0"/> ₫
-            </del>
-            <span class="text-primary fs-3 fw-bold">
-                <fmt:formatNumber value="${product.salePrice}" pattern="#,##0"/> ₫
-            </span>
-        </c:when>
-        <c:otherwise>
-            <span class="text-primary fs-3 fw-bold">
-                <fmt:formatNumber value="${product.price}" pattern="#,##0"/> ₫
-            </span>
-        </c:otherwise>
-    </c:choose>
-</div>
+                <c:choose>
+                    <c:when test="${product.salePrice gt 0}">
+                        <del class="text-danger fs-5 me-2">
+                            <fmt:formatNumber value="${product.price}" pattern="#,##0"/> ₫
+                        </del>
+                        <span class="text-primary fs-3 fw-bold">
+                            <fmt:formatNumber value="${product.salePrice}" pattern="#,##0"/> ₫
+                        </span>
+                    </c:when>
+                    <c:otherwise>
+                        <span class="text-primary fs-3 fw-bold">
+                            <fmt:formatNumber value="${product.price}" pattern="#,##0"/> ₫
+                        </span>
+                    </c:otherwise>
+                </c:choose>
+            </div>
 
 
             <form action="${contextPath}/cart" method="get" class="d-flex align-items-center mb-3">
