@@ -53,6 +53,18 @@
                 .header-categories .dropdown-item:hover {
                     background-color: #fff3e0;
                 }
+
+                .logo-img {
+                    height: 60px;
+                    width: auto;
+                    margin-right: 10px;
+                }
+
+                .logo-text {
+                    font-size: 28px;
+                    font-weight: 700;
+                    color: var(--bs-primary);
+                }
             </style>
         </head>
 
@@ -141,26 +153,25 @@
                 <div class="row gx-0 align-items-center text-center">
                     <div class="col-md-4 col-lg-3 text-center text-lg-start">
                         <div class="d-inline-flex align-items-center">
-                            <a href="${pageContext.request.contextPath}/" class="navbar-brand p-0">
-                                <h1 class="display-5 text-primary m-0">
-                                    <i class="fas fa-shopping-bag text-secondary me-2"></i>Electro
-                                </h1>
-                            </a>
+                            <h1 class="m-0 d-flex align-items-center">
+                                <img src="${pageContext.request.contextPath}/img/logo-electro.png" alt="Logo"
+                                    class="logo-img">
+                                <span class="logo-text">Electronics Shop</span>
+                            </h1>
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-6 text-center">
                         <div class="position-relative ps-4">
-                            <div class="d-flex border rounded-pill">
-                                <input class="form-control border-0 rounded-pill w-100 py-3" type="text"
-                                    placeholder="Bạn cần tìm gì?">
-                                <select class="form-select text-dark border-0 border-start rounded-0 p-3"
-                                    style="width: 200px;">
-                                    <option value="All Category">Tất cả danh mục</option>
-                                </select>
-                                <button type="button" class="btn btn-primary rounded-pill py-3 px-5" style="border: 0;">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
+                            <form action="${pageContext.request.contextPath}/shop" method="get">
+                                <div class="position-relative">
+                                    <input class="form-control border rounded-pill w-100 py-3 ps-5 bg-light" type="text"
+                                        name="keyword" placeholder="Bạn muốn mua gì hôm nay?">
+                                    <button type="submit"
+                                        class="btn position-absolute top-50 start-0 translate-middle-y ms-2 border-0 bg-transparent text-muted">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-3 text-center text-lg-end">
@@ -238,8 +249,10 @@
                     <div class="col-12 col-lg-9">
                         <nav class="navbar navbar-expand-lg navbar-light bg-primary ">
                             <a href="${pageContext.request.contextPath}/" class="navbar-brand d-block d-lg-none">
-                                <h1 class="display-5 text-secondary m-0">
-                                    <i class="fas fa-shopping-bag text-white me-2"></i>Electro
+                                <h1 class="m-0 d-flex align-items-center">
+                                    <img src="${pageContext.request.contextPath}/img/logo-electro.png" alt="Logo"
+                                        class="logo-img">
+                                    <span class="logo-text">Electronics Shop</span>
                                 </h1>
                             </a>
                             <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
